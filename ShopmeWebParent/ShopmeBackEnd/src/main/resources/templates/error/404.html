@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments :: page_head('Error - iShop admin')"></head>
+<body>
+	
+		<div th:replace="nabigationFragments :: menu"></div>
+		<div class="m-3 text-center">
+			<h2>Sorry, requested page could not be found!</h2>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+	
+</body>
+
+</html>

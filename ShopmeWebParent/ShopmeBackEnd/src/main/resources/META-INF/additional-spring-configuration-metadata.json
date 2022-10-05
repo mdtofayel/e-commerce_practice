@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "spring.mvs.pathmatch-strategy",
+  "type": "java.lang.String",
+  "description": "A description for 'spring.mvs.pathmatch-strategy'"
+}]}

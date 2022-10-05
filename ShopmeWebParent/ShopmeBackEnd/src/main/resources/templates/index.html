@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragments :: page_head('Home - iShop Admin')"></head>
+
+<!-- <head>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=divice-width, initial-scale=1.0, minimum-scale=1.0">
+
+	<title>Shopme Admin Control Panel</title>
+
+	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}" />
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</head> -->
+
+<body>
+
+	<div class="container-fluid">
+		<div th:replace="nabigationFragments :: menu"></div>
+		<div>
+			<h2>Shopme Control Panel.</h2>
+			Welcome <a th:href="@{/account}"
+				sec:authentication="principal.fullname"> </a> <span
+				sec:authentication="principal.authorities"></span>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
+
+
+</body>
+
+</html>
