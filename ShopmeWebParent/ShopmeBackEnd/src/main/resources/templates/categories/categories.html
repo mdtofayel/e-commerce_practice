@@ -6,15 +6,10 @@
 <body>
 	<div th:replace="nabigationFragments :: menu"></div>	
 	<div class="col-sm-12">
-		<h1>Manage Users</h1>
-		<a th:href="@{/users/new}"
-			class="fas fa-user-plus fa-2x icon-dark mr-2"></a> &nbsp;&nbsp; <a
-			th:href="@{/users/export/csv}"
-			class="fas fa-file-csv fa-2x icon-dark mr-2"></a> &nbsp;&nbsp; <a
-			th:href="@{/users/export/excel}"
-			class="fas fa-file-excel fa-2x icon-dark mr-2"></a> &nbsp;&nbsp; <a
-			th:href="@{/users/export/pdf}"
-			class="fas fa-file-pdf fa-2x icon-dark mr-2"></a>
+		<h1>Manage Category</h1>
+		<a th:href="@{/categories/new}" class="fas fa-folder-plus fa-2x icon-dark mr-2"></a> &nbsp;&nbsp; <a
+			th:href="@{/categories/export/csv}"
+			class="fas fa-file-csv fa-2x icon-dark mr-2"></a> 
 	</div>
 	<div class="col-sm-12">
 		<div th:if="${message != null}"
@@ -23,9 +18,8 @@
 
 	<div>
 
-		<form th:action="@{/users/page/1}" class="form-inline m-3">
-			<input type="hidden" name="sortField" th:value="${sortField}" />
-			<input type="hidden" name="sortDir" th:value="${sortDir}" />
+		<form th:action="@{/categories/page/1}" class="form-inline m-3">
+			Filter: &nbsp;
 			<input type="search" name="keyword" th:value="${keyword}" class="form-control" required />
 			 &nbsp;&nbsp; 
 			<button type="submit"  class="btn btn-primary" >
@@ -33,61 +27,40 @@
 			</button>
 			 
 			 <button	type="button"  class="btn btn-secondary"
-				onclick="clearFilter()"><i class="fas fa-eraser"></i>
-				</button>
+				onclick="clearFilter()">
+				<i class="fas fa-eraser"></i>
+			</button>
 
 		</form>
 	</div>
 	<div class="full-details">
-		<table
-			class="table table-bordered table-striped 	table-hover table-responsive-xl">
-			<thead class="thead-dark">
-				<tr>
-					<!-- Refactored code -->
-					<th class="hideable-column">
-						<th th:replace="fragments:: column_link('id', 'User Id', 'tag')" />
-					</th>
-					<th>Photos</th>
-					<th class="hideable-column">	
-						<th th:replace="fragments:: column_link('email', 'E-mail','tag')" />
-					</th>
-					<th th:replace="fragments:: column_link('firstName', 'First Name', 'none')" />
-					<th th:replace="fragments:: column_link('lastName', 'Last Name','none')" />
-					<th>Roles</th>
-					<th th:replace="fragments:: column_link('enabled', 'Enabled', 'none')" />
-					<th>Action</th>
-				</tr>
-			</thead>
+		<table class="table table-bordered table-striped table-hover table-responsive-xl">
+			<tr>
+				<th>ID</th>
+				<th>Category Image</th>
+				<th>Category Name</th>
+				<th>Alias</th>
+				<th>Enabled</th>
+				<th>Action</th>
+			</tr>
 			<tbody>
-				<tr th:each="user : ${listUsers}">
-					<td class="hideable-column">[[${user.id}]]</td>
-					<td><span th:if="${user.photos == null}"
-						class="fas fa-portrait fa-3x icon-white"></span> <img
-						th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
-						style="width: 50px"></td>
-					<td class="hideable-column">[[${user.email}]]</td>
-					<td>[[${user.firstName}]]</td>
-					<td>[[${user.lastName}]]</td>
-					<td>[[${user.roles}]]</td>
-
-					<td><a th:if="${user.enabled==true}"
-						class="fas fa-check-circle fa-2x icon-green"
-						th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
-						title="Disable this user"></a> <a th:if="${user.enabled==false}"
-						class="fas fa-circle fa-2x icon-dark"
-						th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
-						title="Enable this user "></a></td>
-
-					<td><a class="fas fa-edit fa-2x icon-green"
-						th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
-						&nbsp; <a class="fas fa-trash fa-2x icon-dark link-delete"
-						th:href="@{'/users/delete/' + ${user.id}}" th:userId="${user.id}"
-						title="Delete this user"></a></td>
-
+				<tr th:each="category : ${listCategories}">
+					
+					<td>[[${category.id}]]</td>
+					<td></td>
+					<td>[[${category.name}]]</td>
+					<td>[[${category.alias}]]</td>
+					
+					<td>
+						<div th:replace	="fragments :: category_status"/>
+					</td>
+					<td>
+						<div th:replace	="fragments :: category_action" />
+					</td>			
 				</tr>
 			</tbody>
 		</table>
-		</div>
+	</div>
 		
 		<div class="less-details">
 			<div th:each="user : ${listUsers}" class="row m-1"> 

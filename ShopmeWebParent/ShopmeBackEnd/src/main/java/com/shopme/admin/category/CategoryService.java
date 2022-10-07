@@ -1,5 +1,21 @@
 package com.shopme.admin.category;
 
-public class CategoryService {
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.shopme.common.entity.Category;
+
+
+@Service
+public class CategoryService {
+	
+	@Autowired
+	CategoryRepository repo;
+	
+	public List<Category> listAll(){
+		return (List<Category>) repo.findAll();
+	}
+	
 }
