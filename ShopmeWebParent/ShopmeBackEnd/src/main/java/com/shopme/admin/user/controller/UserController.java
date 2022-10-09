@@ -42,10 +42,9 @@ public class UserController {
 
 	@GetMapping("/users/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
-			@Param("sortField") String sortField, @Param("sortDir") String sortDir, 
-			@Param("keyword") String keyword) {
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir, @Param("keyword") String keyword) {
 
-		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword );
+		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		List<User> listUsers = page.getContent();
 
 		long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
@@ -105,15 +104,14 @@ public class UserController {
 		}
 
 		redirectAttributes.addFlashAttribute("message", "The user hase been saved successfully.");
-		
+
 		return getRedirectAffectedUser(user);
 	}
 
 	private String getRedirectAffectedUser(User user) {
 		String firstPartOfUserEmail = user.getEmail().split("@")[0];
-		
 
-		return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword="+firstPartOfUserEmail;
+		return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfUserEmail;
 	}
 
 	@GetMapping("/users/edit/{id}")
@@ -159,27 +157,28 @@ public class UserController {
 
 		return "redirect:/users";
 	}
-	
-	
+
 	@GetMapping("/users/export/csv")
 	public void exortToCSV(HttpServletResponse response) throws IOException {
 		List<User> listUsers = service.listAll();
 		UserCsvExporter exporter = new UserCsvExporter();
 		exporter.export(listUsers, response);
-		
+
 	}
+
 	@GetMapping("/users/export/excel")
 	public void exortToExcel(HttpServletResponse response) throws IOException {
 		List<User> listUsers = service.listAll();
 		UserExcelExporter exporter = new UserExcelExporter();
 		exporter.export(listUsers, response);
-		
+
 	}
+
 	@GetMapping("/users/export/pdf")
 	public void exortToPDF(HttpServletResponse response) throws IOException {
 		List<User> listUsers = service.listAll();
 		UserPdfExporter exporter = new UserPdfExporter();
 		exporter.export(listUsers, response);
-		
+
 	}
 }
