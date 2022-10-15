@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
 import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
@@ -71,7 +72,25 @@ public class CategoryRepositoryTest {
 	
 	@Test
 	public void testListRootCategory() {
-		List<Category> testListOfRootCategory = repo.findRootCategory();
+		List<Category> testListOfRootCategory = repo.findRootCategory(Sort.by("name").ascending());
 		testListOfRootCategory.forEach(cat -> System.out.println(cat.getName()));
+	}
+	
+	@Test
+	public void testFindByName() {
+		String name = "Computers";
+		Category cat = repo.findByName(name);
+		assertThat(cat).isNotNull();
+		assertThat(cat.getName()).isEqualTo(name);
+	}
+	
+	
+	@Test
+	public void testFindByAlias() {
+		String name = "Electronics";
+		
+		Category category = repo.findByAlias(name);
+		assertThat(category).isNotNull();
+		assertThat(category.getName()).isEqualTo(name);
 	}
 }

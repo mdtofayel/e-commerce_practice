@@ -115,7 +115,7 @@
 			</div>
 		</div>
 	</form>
-
+	<div th:replace="modal_fragments :: modal_dialog"></div>
 	<div th:replace="fragments :: footer"></div>
 	
 	<script type="text/javascript">
@@ -132,26 +132,17 @@
 			if (response == "OK"){
 				form.submit();
 			} else if(response == "Duplicated"){	
-				showModalDialog("Warning", "There is another user having the email " + userEmail);
+				showWarningModal( "There is another user having the email " + userEmail);
 			}else{
-				showModalDialog("Error", "Unknown response from server");
+				showErrorModal( "Unknown response from server");
 			}
 			
 		}).fail(function(){
-			showModalDialog("Error", "Could not connect to erver");
+			showErrorModal( "Could not connect to erver");
 		});
 		
 		return false;
-	}
-	
-	function showModalDialog(title, message){
-		$("#modalTitle").text(title);
-		$("#modalBody").text(message);
-		$("#modalDialog").modal();
-		
-	}
-	
-	
+	}	
 </script>
 <script th:src="@{/js/common_form.js}"></script>
 </body>

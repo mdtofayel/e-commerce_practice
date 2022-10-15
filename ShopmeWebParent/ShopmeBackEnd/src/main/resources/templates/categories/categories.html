@@ -34,15 +34,19 @@
 		</form>
 	</div>
 	<div class="full-details">
-		<table class="table table-bordered table-striped table-hover table-responsive-xl">
-			<tr>
-				<th>ID</th>
-				<th>Category Image</th>
-				<th>Category Name</th>
-				<th>Alias</th>
-				<th>Enabled</th>
-				<th>Action</th>
-			</tr>
+		<table class="table table-bordered table-striped 	table-hover table-responsive-xl">
+			
+			<thead class="thead-dark">
+				<tr>
+					<th>ID</th>
+					<th>Category Image</th>
+					<th>Category Name</th>
+					<th>Alias</th>
+					<th>Enabled</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			
 			<tbody>
 				<tr th:each="category : ${listCategories}">
 					
@@ -64,39 +68,6 @@
 		</table>
 	</div>
 		
-		<div class="less-details">
-			<div th:each="user : ${listUsers}" class="row m-1"> 
-				<div class="col">
-					<span th:if="${user.photos == null}"
-						class="fas fa-portrait fa-3x icon-white"></span> <img
-						th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
-						style="width: 100px">
-				</div>
-				<div class="col-6">
-				<div>
-				[[${user.fullName}]]
-				</div>
-				<div >
-				[[${user.roles}]]
-				</div>
-				<div class="mt-2 ">
-	 			<a th:if="${user.enabled==true}"
-						class="fas fa-check-circle fa-2x icon-green"
-						th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
-						title="Disable this user"></a> <a th:if="${user.enabled==false}"
-						class="fas fa-circle fa-2x icon-dark"
-						th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
-						title="Enable this user "></a>
-				<a class="fas fa-edit fa-2x icon-green"
-						th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
-						&nbsp; <a class="fas fa-trash fa-2x icon-dark link-delete"
-						th:href="@{'/users/delete/' + ${user.id}}" th:userId="${user.id}"
-						title="Delete this user"></a>
-				</div>
-				</div>
-				<div> &nbsp;</div>
-			</div>
-		</div>
 		
 		<div class="text-center m-1" th:if="${totalItems > 0}">
 			<span>Showing users # [[${startCount}]] to [[${endCount}]] of

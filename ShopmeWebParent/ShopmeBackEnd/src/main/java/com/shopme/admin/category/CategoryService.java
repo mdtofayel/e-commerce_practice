@@ -1,12 +1,15 @@
 package com.shopme.admin.category;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import org.apache.commons.math3.geometry.spherical.twod.SubCircle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.shopme.common.entity.Category;
@@ -18,7 +21,7 @@ public class CategoryService {
 	CategoryRepository repo;
 
 	public List<Category> listAll() {
-		List<Category> findRootCategory = repo.findRootCategory();
+		List<Category> findRootCategory = repo.findRootCategory(Sort.by("name").ascending());
 		return listOfHierachicalCategories(findRootCategory);
 	}
 
@@ -28,7 +31,7 @@ public class CategoryService {
 		for (Category rootCategory : rootCategories) {
 			hierachicalCategories.add(Category.copyFull(rootCategory));
 			
-			Set<Category> children = rootCategory.getChildren();
+			Set<Category> children = sortSubCategories(rootCategory.getChildren());
 			
 			for(Category subCategory: children) {
 				String name = "--" + subCategory.getName();
@@ -45,7 +48,7 @@ public class CategoryService {
 	public List<Category> listOfCategoriesInForm() {
 		List<Category> listOfCategoriesUsedInForn = new ArrayList<>();
 
-		Iterable<Category> categoriesInDB = repo.findAll();
+		Iterable<Category> categoriesInDB = repo.findRootCategory(Sort.by("name").ascending());
 
 		for (Category category : categoriesInDB) {
 			if (category.getParent() == null) {
@@ -64,7 +67,7 @@ public class CategoryService {
 
 	private void lsitChildrem(List<Category> listOfCategoriesUsedInForn, Category parent, int subLevel) {
 		int newSubLevel = subLevel + 1;
-		Set<Category> subCategories = parent.getChildren();
+		Set<Category> subCategories = sortSubCategories(parent.getChildren());
 		for (Category subCategory : subCategories) {
 			String name = "";
 			for (int i = 0; i < newSubLevel; i++) {
@@ -101,6 +104,46 @@ public class CategoryService {
 	}
 	public Category save(Category category) {
 		return repo.save(category);
+	}
+	
+	public String checkUnique(Integer id, String name, String alias){
+		
+		boolean isCategoryNew = (id == null || id == 0);
+		
+		Category categoryByName = repo.findByName(name);
+		
+		if(isCategoryNew) {
+			if(categoryByName != null) {
+				return "DuplicateName";
+			}else {
+				Category categoryAlias = repo.findByAlias(alias);
+				if(categoryAlias != null) {
+					return "DuplicateAliasName";
+				}
+			}
+		}else {
+			if(categoryByName != null && categoryByName.getId() != id) {
+				return "DuplicateName";
+			}
+			Category categoryAlias = repo.findByAlias(alias);
+			if( categoryAlias != null && categoryAlias.getId() != id) {
+				return "DuplicateAliasName";
+			}
+		}
+		return "OK";
+	}
+	
+	private SortedSet<Category> sortSubCategories(Set<Category> children){
+		SortedSet<Category> sortedChildren = new TreeSet<>(new Comparator<Category>() {
+
+			@Override
+			public int compare(Category cat1, Category cat2) {
+				
+				return cat1.getName().compareTo(cat2.getName());
+			}
+		});
+		sortedChildren.addAll(children);
+		return sortedChildren;
 	}
 
 }
