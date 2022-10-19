@@ -7,7 +7,7 @@
 		<groupId>com.shopme</groupId>
 		<artifactId>ShopmeWebParent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-	</parent>	
+	</parent>
 	<artifactId>ShopmeBackEnd</artifactId>
 	<name>ShopmeBackEnd</name>
 	<description>Shopme Admin Project</description>
@@ -16,15 +16,19 @@
 	</properties>
 	<dependencies>
 
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-devtools</artifactId>
-	</dependency>
+	
+
 		<dependency>
-		<groupId>net.sf.supercsv</groupId>
-		<artifactId>super-csv</artifactId>
-		<version>2.4.0</version>
-	</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.supercsv</groupId>
+			<artifactId>super-csv</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
