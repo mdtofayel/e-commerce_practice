@@ -131,23 +131,20 @@
 			</div>
 		</div>
 	</div>
+	<div th:replace="modal_fragments :: confirm_modal"></div>
 	<div th:replace="fragments :: footer"></div>
+	<script th:src="@{/js/common_list.js}"></script>
 	<script type="text/javascript">
+	
+		moduleURL = "[[@{/categories}]]";
+		
 		$(document).ready(function(){
 			$(".link-delete").on("click", function(e){
 				e.preventDefault();
-				link = $(this);
-				//alert($(this).attr("href"));
-				userId = link.attr("userId");
-				$("#yesButton").attr("href", link.attr("href"));
-				$("#confirmText").text("Are you sure to delete this user ID " + userId +"?");
-				$("#confirmModal").modal();
-			});
+				showDeleteConfirmModal($(this), 'category');
 		});
+	});
 		
-		function clearFilter(){
-			window.location="[[@{/users}]]"
-		} 
 	</script>
 </body>
 

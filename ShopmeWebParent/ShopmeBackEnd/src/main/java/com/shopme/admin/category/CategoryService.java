@@ -11,6 +11,9 @@ import java.util.TreeSet;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +22,13 @@ import com.shopme.common.entity.Category;
 @Service
 @Transactional
 public class CategoryService {
+	
+	private static final int ROOT_CATEGORIES_PER_PAGE = 4;
 
 	@Autowired
 	CategoryRepository repo;
 
-	public List<Category> listAll(String sortDir) {
+	public List<Category> listByPage(CategoriesPageInfo categoriesPageInfo,int pageNum, String sortDir) {
 		Sort sort = Sort.by("name");
 
 		if (sortDir.equals("asc")) {
@@ -31,9 +36,16 @@ public class CategoryService {
 		} else if  (sortDir.equals("desc")) {
 			sort = sort.descending();
 		}
+		
+		Pageable pageAble = PageRequest.of(pageNum - 1, ROOT_CATEGORIES_PER_PAGE, sort);
 
-		List<Category> findRootCategory = repo.findRootCategory(sort);
-		return listOfHierachicalCategories(findRootCategory, sortDir);
+		Page<Category> pageCategories = repo.findRootCategory(pageAble);
+		List<Category> rootCategories = pageCategories.getContent();
+		
+		categoriesPageInfo.setTotalElements(pageCategories.getTotalElements());
+		categoriesPageInfo.setTotalPages(pageCategories.getTotalPages());
+		
+		return listOfHierachicalCategories(rootCategories, sortDir);
 	}
 
 	private List<Category> listOfHierachicalCategories(List<Category> rootCategories, String sortDir) {
@@ -170,6 +182,15 @@ public class CategoryService {
 	public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
 			repo.updateEnabledStatus(id, enabled);
 		
+	}
+	
+	public void delete(Integer id) throws CategoryNotFoundException {
+		Long countById = repo.countById(id);
+		if(countById == null || countById == 0) {
+			throw new CategoryNotFoundException("Could not find any category with ID "+ id);
+		}
+		
+		repo.deleteById(id);
 	}
 
 }

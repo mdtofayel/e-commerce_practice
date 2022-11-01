@@ -130,40 +130,9 @@
 		<div class="text-center m-1" th:unless="${totalItems > 0}">
 			<span>No users found</span>
 		</div>
+	<!--TODO problem with modal  -->
 
-		<div th:if="${totalPages > 1}">
-			<nav>
-				<!-- Refactored  code-->
-				<ul class="pagination justify-content-center flex-wrap">
-					<li
-						th:class="${currentPage > 1? 'page-item' : 'page-item disabled'}">
-						<a th:replace="fragments:: page_link(1,'First')"></a>
-					</li>
-					<li
-						th:class="${currentPage > 1? 'page-item' : 'page-item disabled'}">
-						<a
-						th:replace="fragments:: page_link( ${currentPage - 1},'Previous')"></a>
-					</li>
-					<li th:each="i : ${#numbers.sequence(1, totalPages)}"
-						th:class="${currentPage != i ? 'page-item': 'page-item active'}">
-						<a th:replace="fragments:: page_link(${i},${i})"></a>
-					</li>
-
-					<li
-						th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-						<a th:replace="fragments:: page_link( ${currentPage +1},'Next')"></a>
-					</li>
-					<li
-						th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-						<a th:replace="fragments:: page_link( ${totalPages +1},'Last')"></a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-
-	
-
-	<div class="modal fade text-center" id="confirmModal">
+	<!-- <div class="modal fade text-center" id="confirmModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -180,24 +149,23 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div th:replace="fragments :: footer"></div>
+	</div> -->
+	
+		<div th:replace="modal_fragments :: confirm_modal"></div>
+		<div th:replace="fragments :: footer"></div>
+	</div><!-- TODO: problem with extra div -->
+	<script th:src="@{/js/common_list.js}"></script>
 	<script type="text/javascript">
+	
+		moduleURL = "[[@{/categories}]]";
+		
 		$(document).ready(function(){
 			$(".link-delete").on("click", function(e){
 				e.preventDefault();
-				link = $(this);
-				//alert($(this).attr("href"));
-				userId = link.attr("userId");
-				$("#yesButton").attr("href", link.attr("href"));
-				$("#confirmText").text("Are you sure to delete this user ID " + userId +"?");
-				$("#confirmModal").modal();
-			});
+				showDeleteConfirmModal($(this), 'category');
 		});
+	});
 		
-		function clearFilter(){
-			window.location="[[@{/users}]]"
-		} 
 	</script>
 </body>
 
