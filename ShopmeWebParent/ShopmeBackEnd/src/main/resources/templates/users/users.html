@@ -4,7 +4,7 @@
 <head th:replace="fragments :: page_head('Users - iShop Admin')"></head>
 
 <body>
-	<div th:replace="nabigationFragments :: menu"></div>	
+	<div th:replace="nabigationFragments :: menu"></div>
 	<div class="col-sm-12">
 		<h1>Manage Users</h1>
 		<a th:href="@{/users/new}"
@@ -20,24 +20,7 @@
 		<div th:if="${message != null}"
 			class="alert alert-success text-center ">[[${message}]]</div>
 	</div>
-
-	<div>
-
-		<form th:action="@{/users/page/1}" class="form-inline m-3">
-			<input type="hidden" name="sortField" th:value="${sortField}" />
-			<input type="hidden" name="sortDir" th:value="${sortDir}" />
-			<input type="search" name="keyword" th:value="${keyword}" class="form-control" required />
-			 &nbsp;&nbsp; 
-			<button type="submit"  class="btn btn-primary" >
-				<i class="fas fa-search"></i>
-			</button>
-			 
-			 <button	type="button"  class="btn btn-secondary"
-				onclick="clearFilter()"><i class="fas fa-eraser"></i>
-				</button>
-
-		</form>
-	</div>
+	<div th:replace="fragments :: search_form('/users/page/1')"></div>
 	<div class="full-details">
 		<table
 			class="table table-bordered table-striped 	table-hover table-responsive-xl">
@@ -45,16 +28,19 @@
 				<tr>
 					<!-- Refactored code -->
 					<th class="hideable-column">
-						<th th:replace="fragments:: column_link('id', 'User Id', 'tag')" />
+					<th th:replace="fragments:: column_link('id', 'User Id', 'tag')" />
 					</th>
 					<th>Photos</th>
-					<th class="hideable-column">	
-						<th th:replace="fragments:: column_link('email', 'E-mail','tag')" />
+					<th class="hideable-column">
+					<th th:replace="fragments:: column_link('email', 'E-mail','tag')" />
 					</th>
-					<th th:replace="fragments:: column_link('firstName', 'First Name', 'none')" />
-					<th th:replace="fragments:: column_link('lastName', 'Last Name','none')" />
+					<th
+						th:replace="fragments:: column_link('firstName', 'First Name', 'none')" />
+					<th
+						th:replace="fragments:: column_link('lastName', 'Last Name','none')" />
 					<th>Roles</th>
-					<th th:replace="fragments:: column_link('enabled', 'Enabled', 'none')" />
+					<th
+						th:replace="fragments:: column_link('enabled', 'Enabled', 'none')" />
 					<th>Action</th>
 				</tr>
 			</thead>
@@ -87,49 +73,39 @@
 				</tr>
 			</tbody>
 		</table>
-		</div>
-		
-		<div class="less-details">
-			<div th:each="user : ${listUsers}" class="row m-1"> 
-				<div class="col">
-					<span th:if="${user.photos == null}"
-						class="fas fa-portrait fa-3x icon-white"></span> <img
-						th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
-						style="width: 100px">
-				</div>
-				<div class="col-6">
-				<div>
-				[[${user.fullName}]]
-				</div>
-				<div >
-				[[${user.roles}]]
-				</div>
+	</div>
+
+	<div class="less-details">
+		<div th:each="user : ${listUsers}" class="row m-1">
+			<div class="col">
+				<span th:if="${user.photos == null}"
+					class="fas fa-portrait fa-3x icon-white"></span> <img
+					th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
+					style="width: 100px">
+			</div>
+			<div class="col-6">
+				<div>[[${user.fullName}]]</div>
+				<div>[[${user.roles}]]</div>
 				<div class="mt-2 ">
-	 			<a th:if="${user.enabled==true}"
+					<a th:if="${user.enabled==true}"
 						class="fas fa-check-circle fa-2x icon-green"
 						th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
 						title="Disable this user"></a> <a th:if="${user.enabled==false}"
 						class="fas fa-circle fa-2x icon-dark"
 						th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
-						title="Enable this user "></a>
-				<a class="fas fa-edit fa-2x icon-green"
+						title="Enable this user "></a> <a
+						class="fas fa-edit fa-2x icon-green"
 						th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"></a>
-						&nbsp; <a class="fas fa-trash fa-2x icon-dark link-delete"
+					&nbsp; <a class="fas fa-trash fa-2x icon-dark link-delete"
 						th:href="@{'/users/delete/' + ${user.id}}" th:userId="${user.id}"
 						title="Delete this user"></a>
 				</div>
-				</div>
-				<div> &nbsp;</div>
 			</div>
+			<div>&nbsp;</div>
 		</div>
-		
-		<div class="text-center m-1" th:if="${totalItems > 0}">
-			<span>Showing users # [[${startCount}]] to [[${endCount}]] of
-				[[${totalItems}]]</span>
-		</div>
-		<div class="text-center m-1" th:unless="${totalItems > 0}">
-			<span>No users found</span>
-		</div>
+	</div>
+
+
 	<!--TODO problem with modal  -->
 
 	<!-- <div class="modal fade text-center" id="confirmModal">
@@ -150,19 +126,22 @@
 			</div>
 		</div>
 	</div> -->
-	
-		<div th:replace="modal_fragments :: confirm_modal"></div>
-		<div th:replace="fragments :: footer"></div>
-	</div><!-- TODO: problem with extra div -->
+
+	<div th:replace="fragments :: pagination('/users', 'users')"></div>
+	<div th:replace="modal_fragments :: confirm_modal"></div>
+	<div th:replace="fragments :: footer"></div>
+	</div>
+	<!-- TODO: problem with extra div -->
+
 	<script th:src="@{/js/common_list.js}"></script>
 	<script type="text/javascript">
 	
-		moduleURL = "[[@{/categories}]]";
+		moduleURL = "[[@{/users}]]";
 		
 		$(document).ready(function(){
 			$(".link-delete").on("click", function(e){
 				e.preventDefault();
-				showDeleteConfirmModal($(this), 'category');
+				showDeleteConfirmModal($(this), 'user');
 		});
 	});
 		

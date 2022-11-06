@@ -12,13 +12,14 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+import com.shopme.admin.AbstractExporter;
 import com.shopme.common.entity.User;
 
 public class UserCsvExporter extends AbstractExporter{
 	
 	public void export(List<User> listUsers, HttpServletResponse respons) throws IOException {
 		 	 
-			super.export(respons, "text/csv", ".csv");
+			super.export(respons, "text/csv", ".csv","users_");
 		 	 
 		 	 ICsvBeanWriter csvWriter = new CsvBeanWriter(respons.getWriter(), CsvPreference.TAB_PREFERENCE);
 		 	 
