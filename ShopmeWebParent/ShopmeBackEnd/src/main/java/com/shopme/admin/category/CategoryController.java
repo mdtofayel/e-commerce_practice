@@ -36,7 +36,9 @@ public class CategoryController {
 	@GetMapping("/categories/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, @Param("sortDir") String sortDir, Model model,
 			@Param("keyword") String keyword) {
+
 		if (sortDir == null || sortDir.isEmpty()) {
+
 			sortDir = "asc";
 		}
 
@@ -44,9 +46,9 @@ public class CategoryController {
 		List<Category> listCategories = service.listByPage(pageInfo, pageNum, sortDir, keyword);
 
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
-		
+
 		long startCount = (pageNum - 1) * CategoryService.ROOT_CATEGORIES_PER_PAGE + 1;
-		long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE- 1;
+		long endCount = startCount + CategoryService.ROOT_CATEGORIES_PER_PAGE - 1;
 		if (endCount > pageInfo.getTotalElements()) {
 			endCount = pageInfo.getTotalElements();
 		}
@@ -55,7 +57,7 @@ public class CategoryController {
 		model.addAttribute("totalItems", pageInfo.getTotalPages());
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("sortField", "name");
-		model.addAttribute("sortField", sortDir);
+		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("startCount", startCount);
 		model.addAttribute("endCount", endCount);
@@ -138,10 +140,10 @@ public class CategoryController {
 		}
 		return "redirect:/categories";
 	}
-	
+
 	@GetMapping("/categories/export/csv")
 	public void exportToCsv(HttpServletResponse response) throws IOException {
-		List<Category> listCategories  = service.listOfCategoriesInForm();
+		List<Category> listCategories = service.listOfCategoriesInForm();
 		CategoryCsvExporter categoryCsvExporter = new CategoryCsvExporter();
 		categoryCsvExporter.export(listCategories, response);
 	}

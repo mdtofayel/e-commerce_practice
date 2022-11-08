@@ -22,34 +22,45 @@
 		<p>iShop Control Panel - Copyright&copy; Shopme</p>
 	</div>
 
-	<th th:fragment="column_link(fieldName, columnLabel, removeTag)"
+	<th
+		th:fragment="column_link(moduleURL,fieldName, columnLabel, removeTag)"
 		th:remove="${removeTag}"><a class="text-white"
-		th:href="@{'/users/page/' + ${currentPage}+ '?sortField=' + ${fieldName}+ '&sortDir='+ ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword='+ keyword : ''}}">
+		th:href="@{${moduleURL}+ '/page/' + ${currentPage}+ '?sortField=' + ${fieldName}+ '&sortDir='+ ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword='+ keyword : ''}}">
 			[[${columnLabel}]]</a> <span th:if="${sortField == fieldName}"
 		th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 	</th>
 	<a th:fragment="page_link(moduleURL,pageNum, label)" class="page-link"
 		th:href="@{${moduleURL} + '/page/' +${pageNum} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+ ${keyword != null ? '&keyword='+ keyword : ''}}">[[${label}]]</a>
-
-	<div th:fragment="category_status" class="mt-2 ">
-		<a th:if="${category.enabled==true}"
-			class="fas fa-check-circle fa-2x icon-green"
-			th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
-			title="Disable this category"></a> <a
-			th:if="${category.enabled==false}"
-			class="fas fa-circle fa-2x icon-dark"
-			th:href="@{'/categories/' + ${category.id} + '/enabled/true'}"
-			title="Enable this category "></a>
+	<div th:fragment="user_photos" th:remove="tag">
+		<span th:if="${user.photos == null}"
+			class="fas fa-portrait fa-3x icon-silver"></span> <img
+			th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
+			style="width: 50px">
 	</div>
-	<div th:fragment="category_action" class="mt-2 ">
-		<a class="fas fa-edit fa-2x icon-green"
-			th:href="@{'/categories/edit/' + ${category.id}}"
-			title="Edit this category"></a> &nbsp;
-		<th:block th:if="${category.hasChildren == false}">
+
+	<div th:fragment="status(enabled,entityName, entityURL)" class="mt-2 ">
+		<a th:if="${enabled==true}"
+			class="fas fa-check-circle fa-2x icon-green"
+			th:href="@{${entityURL} + '/enabled/false'}"
+			th:title="'Disable this ' +${entityName}"></a> <a
+			th:if="${enabled==false}" class="fas fa-circle fa-2x icon-dark"
+			th:href="@{${entityURL} + '/enabled/true'}"
+			th:title="'Enable this ' +${entityName} "></a>
+	</div>
+	<div th:fragment="edit(entityName, editURL)" th:remove="tag">
+		<a class="fas fa-edit fa-2x icon-green" th:href="@{${editURL}}"
+			title="'Edit this ' + ${entityName}"></a>
+
+	</div>
+	<div th:fragment="delete(entityName,entityId,deleteURL,visiable)"
+		th:remove="tag">
+		&nbsp;
+		<th:block th:if="${visiable}">
 			<a class="fas fa-trash fa-2x icon-dark link-delete"
-				th:href="@{'/categories/delete/' + ${category.id}}"
-				th:entityId="${category.id}" title="Delete this categories"></a>
+				th:href="@{${deleteURL}}" th:entityId="${entityId}"
+				title="'Delete this ' +${entityName}"></a>
 		</th:block>
+
 	</div>
 	<div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
 
@@ -95,7 +106,7 @@
 		</div>
 	</div>
 
-	<div th:fragment="search_form(moduleURL)">
+	<div th:fragment="search_form_and_message(moduleURL)">
 
 		<form th:action="@{${moduleURL}}" class="form-inline m-3">
 			<input type="hidden" name="sortField" th:value="${sortField}" /> <input
@@ -112,6 +123,11 @@
 			</button>
 
 		</form>
+		<div class="col-sm-12">
+			<div th:if="${message != null}"
+				class="alert alert-success text-center ">[[${message}]]</div>
+		</div>
+
 	</div>
 
 </body>

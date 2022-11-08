@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+
 import com.shopme.common.entity.Category;
 
 @DataJpaTest(showSql = false)

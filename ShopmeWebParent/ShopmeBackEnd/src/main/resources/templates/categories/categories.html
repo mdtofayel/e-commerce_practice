@@ -12,11 +12,8 @@
 			th:href="@{/categories/export/csv}"
 			class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
 	</div>
-	<div class="col-sm-12">
-		<div th:if="${message != null}"
-			class="alert alert-success text-center ">[[${message}]]</div>
-	</div>
-	<div th:replace="fragments :: search_form('/categories/page/1')"></div>
+	
+	<div th:replace="fragments :: search_form_and_message('/categories/page/1')"></div>
 	<div class="full-details">
 		<table
 			class="table table-bordered table-striped 	table-hover table-responsive-xl">
@@ -25,11 +22,13 @@
 				<tr>
 					<th>ID</th>
 					<th>Category Image</th>
-					<th><a class="text-white"
+					<!-- <th><a class="text-white"
 						th:href="@{'/categories/page/'+${currentPage} + '?sortDir=' + ${reverseSortDir}+${keyword != null ? '&keyword=' + keyword : ''}}">Category
 							Name </a> <span
 						th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-					</th>
+					</th> -->
+					<th th:replace="fragments:: column_link('/categories','name', 'Category Name', 'none')" />
+					
 					<th class="hideable-column">Alias</th>
 					<th>Enabled</th>
 					<th>Action</th>
@@ -46,11 +45,13 @@
 					<td class="hideable-column">[[${category.alias}]]</td>
 
 					<td>
-						<div th:replace="fragments :: category_status" />
+						 <div th:replace="fragments :: status(${category.enabled}, 'category','/categories/' +${category.id})"/> 
 					</td>
 					<td>
-						<div th:replace="fragments :: category_action" />
-					</td>
+						<div th:replace="fragments :: edit('category', '/categories/edit/' + ${category.id})"/> 
+					 	&nbsp;
+					   <div th:replace="fragments :: delete('category', ${category.id}, '/categories/delete/' + ${category.id},${!category.hasChildren})"/> 
+					</td> 
 				</tr>
 			</tbody>
 		</table>
@@ -66,11 +67,12 @@
 
 			<div class="col-8">
 				<div>[[${category.name}]]</div>
-				<div class="mt-2">
-					<div th:replace="fragments :: category_status" />
+				<div class="mt-4">
+					<div th:replace="fragments :: status(${category.enabled}, 'category','/categories/' +${category.id})"/> 
 					&nbsp;
-					<div th:replace="fragments :: category_action" />
-			
+					 <div th:replace="fragments :: edit('category', '/categories/edit/' + ${category.id})"/> 
+			 		&nbsp;
+			 		 <div th:replace="fragments :: delete('category',${category.id}, '/categories/delete/' + ${category.id},${!category.hasChildren})"/> 
 				</div>
 
 			</div>
