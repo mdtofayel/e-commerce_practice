@@ -19,7 +19,7 @@
 </head>
 <body>
 	<div th:fragment="footer" class="text-center m-3">
-		<p>iShop Control Panel - Copyright&copy; Shopme</p>
+		<p>iShop Control Panel - Copyright&copy; iShop.com</p>
 	</div>
 
 	<th
@@ -49,7 +49,7 @@
 	</div>
 	<div th:fragment="edit(entityName, editURL)" th:remove="tag">
 		<a class="fas fa-edit fa-2x icon-green" th:href="@{${editURL}}"
-			title="'Edit this ' + ${entityName}"></a>
+			th:title="'Edit this ' + ${entityName}"></a>
 
 	</div>
 	<div th:fragment="delete(entityName,entityId,deleteURL,visiable)"
@@ -58,7 +58,7 @@
 		<th:block th:if="${visiable}">
 			<a class="fas fa-trash fa-2x icon-dark link-delete"
 				th:href="@{${deleteURL}}" th:entityId="${entityId}"
-				title="'Delete this ' +${entityName}"></a>
+				th:title="'Delete this ' + ${entityName}"></a>
 		</th:block>
 
 	</div>

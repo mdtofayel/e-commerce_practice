@@ -40,3 +40,4 @@ function showImageThumbnail(fileInput) {
 	function showWarningModal(message){
 		showModalDialog("Warning", message);
 	}
+	
