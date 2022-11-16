@@ -117,4 +117,33 @@ public class ProductRepositoryTests {
 		assertThat(!result.isPresent());
 	}
 	
+	@Test
+	public void testSaveProductWithImages() {
+		Integer productId = 2;
+		Product product = productRepository.findById(productId).get();
+		
+		product.setMainImage("main_image.jpg");
+		product.addExtraImage("extra_image_1");
+		product.addExtraImage("extra_image_2");
+		product.addExtraImage("extra_image_3");
+		
+		Product saveProduct = productRepository.save(product);
+		
+		assertThat(saveProduct.getImages().size()).isEqualTo(3);
+		
+	}
+	@Test
+	public void testSaveProductDetails() {
+		Integer product2 = 2;
+		Product product = productRepository.findById(product2).get();
+		
+		product.addDetails("Device Memory","128 GB");
+		product.addDetails("CPU Model", "MediaTek");
+		product.addDetails("OS", "Android 10");
+		
+		Product savedProduct = productRepository.save(product);
+		assertThat(savedProduct.getDetails()).isNotEmpty();
+		
+	}
+	
 }

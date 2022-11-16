@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org">
-<head th:fragment="page_head(title)">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="page_head(title, remove)" th:remove="${remove}">
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=divice-width, initial-scale=1.0, minimum-scale=1.0">
@@ -22,12 +23,13 @@
 		<p>iShop Control Panel - Copyright&copy; iShop.com</p>
 	</div>
 
-	<th
-		th:fragment="column_link(moduleURL,fieldName, columnLabel, removeTag)"
-		th:remove="${removeTag}"><a class="text-white"
-		th:href="@{${moduleURL}+ '/page/' + ${currentPage}+ '?sortField=' + ${fieldName}+ '&sortDir='+ ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword='+ keyword : ''}}">
-			[[${columnLabel}]]</a> <span th:if="${sortField == fieldName}"
-		th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+	<th	th:fragment="column_link(moduleURL,fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
+		<a class="text-white" th:href="@{${moduleURL}+ '/page/' + ${currentPage}+ '?sortField=' + ${fieldName}+ '&sortDir='+ ${sortField != fieldName ? sortDir : reverseSortDir} + ${keyword != null ? '&keyword='+ keyword : ''}}">
+				[[${columnLabel}]]
+		</a> 
+		<span th:if="${sortField == fieldName}"
+			th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}">
+		</span>
 	</th>
 	<a th:fragment="page_link(moduleURL,pageNum, label)" class="page-link"
 		th:href="@{${moduleURL} + '/page/' +${pageNum} +'?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+ ${keyword != null ? '&keyword='+ keyword : ''}}">[[${label}]]</a>

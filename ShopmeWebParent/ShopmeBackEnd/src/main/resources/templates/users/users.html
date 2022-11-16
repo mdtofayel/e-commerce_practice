@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: page_head('Users - iShop Admin')"></head>
+<head th:replace="fragments :: page_head('Users - iShop Admin','none')"></head>
 
 <body>
 	<div th:replace="nabigationFragments :: menu"></div>
@@ -26,11 +27,11 @@
 					<!-- Refactored code -->
 					<th class="hideable-column">
 					<th th:replace="fragments:: column_link('/users','id', 'User Id', 'tag')" />
-					</th>
+					
 					<th>Photos</th>
 					<th class="hideable-column">
 					<th th:replace="fragments:: column_link('/users','email', 'E-mail','tag')" />
-					</th>
+					
 					<th
 						th:replace="fragments:: column_link('/users','firstName', 'First Name', 'none')" />
 					<th

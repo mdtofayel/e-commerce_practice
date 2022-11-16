@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: page_head('Brands - iShop Admin')"></head>
+<head th:replace="fragments :: page_head('Brands - iShop Admin','none')"></head>
 
 <body>
 
@@ -72,7 +72,7 @@
 	</div>
 	<script th:src="@{/js/common_list.js}"></script>
 	<script type="text/javascript">
-	
+		MAX_FILE_SIZE = 102400;
 		moduleURL = "[[@{/brands}]]";
 		
 		$(document).ready(function(){

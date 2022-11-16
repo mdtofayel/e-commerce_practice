@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: page_head(${pageTitle})"></head>
+<head th:replace="fragments :: page_head(${pageTitle},'none')"></head>
 
 <body>
 	<div class="container-fluid">
@@ -77,6 +77,8 @@
 	<div th:replace="fragments :: footer"></div>
 
 	<script type="text/javascript">
+		MAX_FILE_SIZE = 102400;
+	
 		moduleURL ="[[@{/categories}]]";
 		
 		function checkUnique(form){

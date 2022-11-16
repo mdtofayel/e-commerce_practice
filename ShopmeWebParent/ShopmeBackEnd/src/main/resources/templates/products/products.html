@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: page_head('Products  - iShop Admin')"></head>
+<head th:replace="fragments :: page_head('Products  - iShop Admin','none')"></head>
 
 <body>
 
@@ -39,22 +39,24 @@
 
 
 						<td>[[${product.id}]]</td>
-						<td></td>
+						<td>
+							<img th:src="@{${product.mainImagePath}}" style="width: 120px" class="img-fluid"/>
+						</td>
 						<td>[[${product.name}]]</td>
 						<td>[[${product.brand.name}]]</td>
 						<td>[[${product.category.name}]]</td>
 
 						<td>
 							<div
-								th:replace="fragments :: status(${product.enabled}, 'product','/products/' +${product.id})" />
+								th:replace="fragments :: status(${product.enabled}, 'product','/products/' +${product.id})" ></div>
 						</td>
 						<td>
 						<a 	class="fas fa-file-alt fa-2x icon-green" th:href="@{'/products/detail/' + ${product.id}}" title="View details of this product"></a>
 						&nbsp;
 						<div
-							th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})" />
+							th:replace="fragments :: edit('product', '/products/edit/' + ${product.id})" ></div>
 						&nbsp;
-						<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id},true)"/> 
+						<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id},true)"></div>
 					</td>
 					</tr>
 				</tbody>
