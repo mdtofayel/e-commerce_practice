@@ -14,6 +14,7 @@ import com.shopme.common.entity.User;
 
 public class IShopUserDetails implements UserDetails {
 
+	private static final long serialVersionUID = 1L;
 	private User user;
 
 	public IShopUserDetails(User user) {
@@ -74,6 +75,10 @@ public class IShopUserDetails implements UserDetails {
 
 	public void setLastName(String lastName) {
 		this.user.setLastName(lastName);
+	}
+	
+	public boolean hasRole(String roleName) {
+		return user.hasRole(roleName);
 	}
 
 }

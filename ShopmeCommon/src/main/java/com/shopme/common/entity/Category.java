@@ -1,6 +1,7 @@
 package com.shopme.common.entity;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -39,9 +41,12 @@ public class Category {
 	private Category parent;
 
 	@OneToMany(mappedBy = "parent")
+	@OrderBy("name asc")
 	private Set<Category> children = new HashSet<>();
-
-		
+	
+	@Column(name = "all_parents_ids",length=256, nullable=true)
+	private String allParentIDs;
+	
 	public Category(String name) {
 		this.name = name;
 		this.alias = name;
@@ -169,11 +174,12 @@ public class Category {
 	}
 	
 	@Transient
-	public String getImagePath() {
+	public String getImagePath() throws UnsupportedEncodingException {
 		
 		if(this.id == null) return "/images/image-thumbnail.png";
 		
-		return "/category-images/"+this.id + "/" + this.image;
+		return "/category-images/"+this.id + "/" +this.image;
+		//return "/category-images/"+this.id + "/" + URLEncoder.encode(this.image, StandardCharsets.UTF_8.toString()).replace("+", "%20");
 	}
 	
 	
@@ -194,4 +200,12 @@ public class Category {
 		return this.name;
 	}
 
+	public String getAllParentIDs() {
+		return allParentIDs;
+	}
+
+	public void setAllParentIDs(String allParentIDs) {
+		this.allParentIDs = allParentIDs;
+	}
+	
 }

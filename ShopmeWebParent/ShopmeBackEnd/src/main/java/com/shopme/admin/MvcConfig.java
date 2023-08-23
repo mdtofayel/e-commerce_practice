@@ -11,13 +11,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {		
 		exposeDirectory("user-photos", registry);
 		exposeDirectory("../category-images", registry);
 		exposeDirectory("../brand-logos", registry);
 		exposeDirectory("../product-images", registry);
-		
+		exposeDirectory("../site-logos", registry);
 	}
 	
 	private void exposeDirectory(String pathPatern, ResourceHandlerRegistry  registry) {

@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Internal Server Error - iShop','none')"></head>
+<body>
+	
+		<div th:replace="nabigationFragments :: header_menu"></div>
+		<div class="m-3 text-center">
+			<h2>Sorry, sever has encountered an error while you requested!</h2>
+		</div>
+		<div th:replace="nabigationFragments :: footer_menu"></div>
+	
+</body>
+
+</html>

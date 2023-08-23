@@ -1,9 +1,9 @@
 package com.shopme.common.entity;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,13 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.hibernate.annotations.FilterJoinTables;
 
 @Entity
 @Table(name = "users")
@@ -145,6 +142,17 @@ public class User {
 	public String getFullName() {
 		
 		return firstName +" " + lastName;
+	}
+	
+	public boolean hasRole(String roleName) {
+		Iterator<Role> iterator = roles.iterator();
+		while(iterator.hasNext()) {
+			Role role = iterator.next();
+			if(role.getName().equals(roleName)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 //<head th:replace="fragments :: page_head('Users - iShop Admin')"></head>

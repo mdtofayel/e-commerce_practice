@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments :: page_head('Brands - iShop Admin','none')"></head>
 
@@ -24,8 +24,8 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>Brand ID</th>
-						<th>Brand Image</th>
-						<th>Brand Name</th>
+						<th>Logo</th>
+						<th th:replace="fragments :: column_link('/brands', 'name', 'Brand Name', 'none')"></th>
 						<th>Categories</th>
 						<th></th>
 						<!-- <th><a class="text-white"
@@ -46,7 +46,8 @@
 
 						
 						<td>[[${brand.id}]]</td>
-						<td></td>
+						<td><img th:src="@{${brand.logoPath}}"
+						style="width: 100px" class="img-fluid" /></td>
 						<td>[[${brand.name}]]</td>
 						<td><th:block th:each="category:${brand.categories}">
 								<span class=" badge badge-secondary" th:text="${category.name}"></span>

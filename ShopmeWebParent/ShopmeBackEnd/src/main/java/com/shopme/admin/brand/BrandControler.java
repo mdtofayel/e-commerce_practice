@@ -42,9 +42,12 @@ public class BrandControler {
 			) {
 		Page<Brand> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		List<Brand> listBrands = page.getContent();
+		
 		long startCount = (pageNum - 1) * BrandService.BRANDS_PER_PAGE +1;
 		long endCount = startCount + BrandService.BRANDS_PER_PAGE - 1;
-		
+		if(endCount >= page.getTotalElements()) {
+			endCount = page.getTotalElements();
+		}
 		String reverseSortDir = sortDir.equals("asc")? "desc" : "asc";
 		
 		model.addAttribute("currentPage",pageNum);
