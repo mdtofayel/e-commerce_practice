@@ -26,10 +26,6 @@ public class CountryRestController {
 	
 	@PostMapping("/countries/save")
 	public String save(@RequestBody Country country) {
-		Optional<Country> existingCountry = repo.findById(country.getId());
-		if (!existingCountry.isPresent()) {
-		    return String.valueOf(country.getId());
-		}
 		Country saveCountry = repo.save(country);
 		return String.valueOf(saveCountry.getId());
 	}

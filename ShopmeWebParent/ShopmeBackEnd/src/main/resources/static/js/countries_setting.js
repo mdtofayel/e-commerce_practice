@@ -50,7 +50,7 @@ function deleteCountry(){
 	url = contextPath + "countries/delete/"+ dropDownCountry.val().split("-")[0];
 
 	$.get(url,function(){
-		 $("#dropDownCountries option[value='" + optionValue + "']").remove();
+		$("#dropDownCountries option[value='" + optionValue + "']").remove();
 		changeFormStateToNew();		
 	}).done(function(){
 		showToastMessage("Selected Country have been Deleted.");
