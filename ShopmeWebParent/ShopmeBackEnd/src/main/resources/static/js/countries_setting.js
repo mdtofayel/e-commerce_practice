@@ -47,10 +47,12 @@ $(document).ready(function(){
 });
 
 function deleteCountry(){
-	url = contextPath + "countries/delete/"+ dropDownCountry.val().split("-")[0];
+	var optionValue =  dropDownCountry.val().split("-")[0];
+	url = contextPath + "countries/delete/"+optionValue;
+	
 
 	$.get(url,function(){
-		$("#dropDownCountries option[value='" + optionValue + "']").remove();
+		$("#dropDownCountries option[value='" +dropDownCountry.val()+ "']").remove();
 		changeFormStateToNew();		
 	}).done(function(){
 		showToastMessage("Selected Country have been Deleted.");
