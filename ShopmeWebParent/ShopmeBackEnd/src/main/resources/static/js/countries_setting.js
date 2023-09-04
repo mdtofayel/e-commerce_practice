@@ -27,7 +27,7 @@ $(document).ready(function(){
 	
 	buttonAddCountry.click(function(){
 		if(buttonAddCountry.val()== "New"){
-			changeFormStateToNew();
+			changeFormStateToNewCountry();
 		}else{
 			
 			addCountry();
@@ -51,10 +51,15 @@ function deleteCountry(){
 	url = contextPath + "countries/delete/"+optionValue;
 	
 
-	$.get(url,function(){
-		$("#dropDownCountries option[value='" +dropDownCountry.val()+ "']").remove();
-		changeFormStateToNew();		
+	$.ajax({
+		type: 'DELETE',
+		url: url,
+		beforeSend: function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfValue);	
+		}
 	}).done(function(){
+		$("#dropDownCountries  option[value'"+dropDownCountry.val()+"']").remove();
+		changeFormStateToNewCountry();
 		showToastMessage("Selected Country have been Deleted.");
 	}).fail(function(){
 		showToastMessage("ERROR: Cound not connected to the server");
@@ -83,7 +88,7 @@ function updateCountry(){
 		$("#dropDownCountries option:selected").val(countryId + "-" +countryCode);
 		$("#dropDownCountries option:selected").text(countryName);
 		showToastMessage("The country has been updated.");
-		changeFormStateToNew();
+		changeFormStateToNewCountry();
 	}).fail(function (){
 		showToastMessage("ERROR: Could not connect to server or encountered an error.")
 	});
@@ -120,7 +125,7 @@ function selectNewlyAddedCountry(countryId,countryCode, countryName){
 	fieldCountryCode.val("");
 }
 
-function changeFormStateToNew(){
+function changeFormStateToNewCountry(){
 	buttonAddCountry.val("Add");
 	labelCountryName.text("Country Name:");
 	
