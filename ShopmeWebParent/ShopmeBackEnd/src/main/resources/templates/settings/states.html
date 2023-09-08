@@ -25,11 +25,11 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
  			<select class="form-control m-2" style="height:300px" size="3" id="dropDownStates"></select>
  		</div>
  	</div>
- 	
+ 	<form class="formState"></form>
  	<div class="form-group row ">
  		<label class="col-sm-2 col-form-label mt-2" id="labelStateName" > States/Provinces Name</label>
  		<div class="col-sm-6">
- 			<input type="text" class="form-control mt-2" id="fieldStateName"/>
+ 			<input type="text" class="form-control mt-2" id="fieldStateName" required="required" minlength="3" maxlength="45"/>
  		</div>
  		
  		<div class="col-lg-4 mt-2">
