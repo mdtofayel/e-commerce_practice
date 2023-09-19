@@ -20,7 +20,7 @@ public class UserCsvExporter extends AbstractExporter{
 		 	 
 		 	 ICsvBeanWriter csvWriter = new CsvBeanWriter(respons.getWriter(), CsvPreference.TAB_PREFERENCE);
 		 	 
-		 	 String[] csvHeader = {"User Id", "E-mail", "First Name", "LAst Name", "Roles", "Enabled"};
+		 	 String[] csvHeader = {"User Id", "E-mail", "First Name", "Last Name", "Roles", "Enabled"};
 		 	 String [] fieldMapping = {"id", "email", "firstName", "lastName", "roles", "enabled"};
 		 	 
 		 	csvWriter.writeHeader(csvHeader);

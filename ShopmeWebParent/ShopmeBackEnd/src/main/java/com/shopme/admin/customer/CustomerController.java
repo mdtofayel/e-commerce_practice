@@ -58,7 +58,7 @@ public class CustomerController {
 		String status = enabled ? "enabled" : "disabled";
 		String message = "The customer Id "+ id + "has been "+status;
 		
-		redirectAttributes.addAttribute("message",message);
+		redirectAttributes.addFlashAttribute("message",message);
 		
 		return "redirect:/customers";
 	}
@@ -72,7 +72,7 @@ public class CustomerController {
 			
 			return "customers/customer_detail_modal";
 		} catch ( CustomerNotFoundException e) {
-			ra.addAttribute("message", e.getMessage());
+			ra.addFlashAttribute("message", e.getMessage());
 			return "redirect:/customers";
 		}
 	}
@@ -90,7 +90,7 @@ public class CustomerController {
 			return "customers/customer_form";
 		} catch (CustomerNotFoundException ex) {
 			
-			ra.addAttribute("message",ex.getMessage());
+			ra.addFlashAttribute("message",ex.getMessage());
 			return "redirect:/customers";
 		}
 	}
