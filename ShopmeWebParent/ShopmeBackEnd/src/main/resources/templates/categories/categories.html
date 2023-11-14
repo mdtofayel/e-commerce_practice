@@ -13,7 +13,7 @@
 			class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
 	</div>
 	
-	<div th:replace="fragments :: search_form_and_message('/categories/page/1')"></div>
+	<div th:replace="fragments :: search_form_and_message"></div>
 	<div class="full-details">
 		<table
 			class="table table-bordered table-striped 	table-hover table-responsive-xl">
@@ -27,7 +27,7 @@
 							Name </a> <span
 						th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
 					</th> -->
-					<th th:replace="fragments:: column_link('/categories','name', 'Category Name', 'none')" />
+					<th th:replace="fragments:: column_link('name', 'Category Name', 'none')" />
 					
 					<th class="hideable-column">Alias</th>
 					<th>Enabled</th>
@@ -79,36 +79,15 @@
 			<div>&nbsp;</div>
 		</div>
 	</div>
-
-
-
-
-	<!-- 	<div class="modal fade text-center" id="confirmModal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Delete Confirmation</h4>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body">
-					<span id="confirmText"></span>
-				</div>
-
-				<div class="modal-footer">
-					<a class="btn btn-success" href="" id="yesButton">Yes</a>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-				</div>
-			</div>
-		</div>
-	</div> -->
+	
 	<div th:if="${keyword!=null}" class="text-center">
 		<span>Search result dose not show categories in hierarchical
 			form</span>
-		<div th:replace="fragments :: pagination('/categories', 'categories')"></div>
+		<div th:replace="fragments :: pagination('categories')"></div>
 	</div>
 	<th:block th:unless="${keyword!=null}" class="text-center">
 		<div
-			th:replace="fragments :: pagination('/categories', 'top-lavel categories')"></div>
+			th:replace="fragments :: pagination('top-lavel categories')"></div>
 	</th:block>
 
 	<div th:replace="modal_fragments :: confirm_modal"></div>

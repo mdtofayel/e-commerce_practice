@@ -67,13 +67,18 @@ public class CustomerService {
 		return true;
 	}
 	public void save( Customer customerInForm) {
-		if(!customerInForm.getPassword().isEmpty()) {
+		Customer customerIndDb = customerRepo.findById(customerInForm.getId()).get();
+		
+		if( customerInForm.getPassword() != null && !customerInForm.getPassword().isEmpty()) {
 			String encodedPassword = passwordEncoder.encode(customerInForm.getPassword());
 			customerInForm.setPassword(encodedPassword);
 		}else {
-			Customer customerIndDb = customerRepo.findById(customerInForm.getId()).get();
 			customerInForm.setPassword(customerIndDb.getPassword());
 		}
+		
+		customerInForm.setEnabled(customerIndDb.isEnabled());
+		customerInForm.setCreatedTime(customerIndDb.getCreatedTime());
+		customerInForm.setVerificationCode(customerIndDb.getVerificationCode());
 		customerRepo.save(customerInForm);
 	}
 	
