@@ -104,10 +104,12 @@ public class ProductController {
 			@AuthenticationPrincipal IShopUserDetails loggedUser)
 					throws IOException {
 		
-		if(loggedUser.hasRole("Salesperson")) {
-			productService.saveProductPrice(product);
-			redirectAttributes.addFlashAttribute("message", "The Brand has been save successfully");
-			return "redirect:/products";
+		if(!loggedUser.hasRole("Admin") && !loggedUser.hasRole("Editor")) {
+			if(loggedUser.hasRole("Salesperson")) {
+				productService.saveProductPrice(product);
+				redirectAttributes.addFlashAttribute("message", "The Brand has been save successfully");
+				return "redirect:/products";
+			}			
 		}
 
 		ProductSaveHelper.setMainImageName(mainImageMultipart, product);
